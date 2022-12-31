@@ -90,7 +90,6 @@ namespace MyGame
         public static Vector3 Up        { get => _up;    }
         public static Vector3 Right     { get => _right; }
 
-        // Matrizes de visualizao e projeção da camera ssao elas que sero enviadas para os nossos shaders
         // isso define a posicao da camera e para onde ela está olhando
 
         public static Matrix4 ViewMatrix
@@ -100,7 +99,6 @@ namespace MyGame
         // isso serve para definir um limite da distancia da perspectiva do plano 3D
         // quanto mais alto valor mais longe a visao ira alcançar, más lembre-se
         // nao extrapole muito pois pode influençiar na performançe
-        // ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, 0.01f, 600f);
         public static Matrix4 ProjectionMatrix  
         { 
             get => Matrix4.CreatePerspectiveFieldOfView(_fov, AspectRatio, 0.01f, 10000f);
@@ -125,6 +123,19 @@ namespace MyGame
             if(input(Keys.C))     Position -= Up * cameraSpeed * (float)Clock.ElapsedTime;
 
             
+        }
+        public Camera(Vector3 position = new Vector3())
+        {
+
+            if(position == Vector3.Zero)
+            {
+                Position = new Vector3(0.0f, 10.0f, 20.0f);
+            }
+            else
+            {
+                Position = position;
+            }
+
         }
         // --------------------------------------------------------------------------------------------------------------------------------
         // Movimentação da camera
@@ -161,19 +172,7 @@ namespace MyGame
                 }
             }
         }
-        public Camera(Vector3 position = new Vector3())
-        {
 
-            if(position == Vector3.Zero)
-            {
-                Position = new Vector3(0.0f, 10.0f, 20.0f);
-            }
-            else
-            {
-                Position = position;
-            }
-
-        }
         public void UpdateCamera()
         {
             if (!Program.window.IsFocused)
@@ -181,6 +180,7 @@ namespace MyGame
 
             MouseUpdateView();
             KeysUpdatePosition();
+            Fov = 50f;
         }
         public void UpdateSize(Vector2i size)
         {
@@ -190,7 +190,7 @@ namespace MyGame
         {
             if(activeView)
             {
-                Fov -= mouseWheelEventArgs.OffsetY;
+                // Fov -= mouseWheelEventArgs.OffsetY;
             }
         }
     }

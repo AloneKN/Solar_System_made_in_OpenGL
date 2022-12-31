@@ -19,37 +19,7 @@ namespace MyGame
         private Dictionary<uint, Character> characteres = new Dictionary<uint, Character>();
         public Text(string fontePath)
         {
-            string vert_shader = @" #version 460 core
-
-                                    layout (location = 0) in vec4 vertex;
-
-                                    out vec2 TexCoords;
-
-                                    uniform mat4 projection;
-
-                                    void main()
-                                    {
-                                        gl_Position = vec4(vertex.xy, 0.0, 1.0) * projection;
-                                        TexCoords = vertex.zw;
-                                    }";
-
-            string frag_shader = @" #version 460 core
-
-                                    in vec2 TexCoords;
-                                    out vec4 FragColor;
-
-                                    uniform sampler2D text;
-                                    uniform vec4 textColor;
-
-                                    void main()
-                                    {    
-                                        vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
-                                        FragColor = textColor * sampled;
-                                        if(FragColor.a <= 0.1)
-                                            discard;
-                                    }";
-                                                
-            shaderFonts = new ShaderProgram(vert_shader, frag_shader);
+            shaderFonts = new ShaderProgram("FreeType/text.vert", "FreeType/text.frag");
 
             FreeTypeClassApi fts = new FreeTypeClassApi(fontePath);
             
@@ -104,13 +74,14 @@ namespace MyGame
         }
         public void RenderText(string text, Vector2 position, float scale, System.Numerics.Vector4 color)
         {
-            GL.BindVertexArray(Vao);
             shaderFonts.Use();
             Matrix4 projection = Matrix4.CreateOrthographicOffCenter(0.0f, Program.Size.X, 0.0f, Program.Size.Y, 0.0f, 1.0f);
             shaderFonts.SetUniform("projection", projection);
+
             shaderFonts.SetUniform("textColor", color);
             
 
+            GL.BindVertexArray(Vao);
             foreach(var c in text)
             {
                 Character ch = characteres[c];
@@ -125,7 +96,7 @@ namespace MyGame
                 float w = ch.Size.X * scale;
                 float h = ch.Size.Y * scale;
 
-                float[,] vertices = new float[6, 4]
+                var vertices = new float[6, 4]
                 {
                     { xpos,     ypos + h,   0.0f, 0.0f },
                     { xpos,     ypos,       0.0f, 1.0f },

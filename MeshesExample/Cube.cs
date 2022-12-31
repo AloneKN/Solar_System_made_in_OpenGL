@@ -60,10 +60,10 @@ namespace MyGame
                 Vao = new VertexArrayObject();
                 vbo = new BufferObject<float>(vertices, BufferTarget.ArrayBuffer);
 
-                Vao.BindBuffer(ref vbo);
-                Vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 8, 0);
-                Vao.VertexAttributePointer(1, 3, VertexAttribPointerType.Float, 8, 3);
-                Vao.VertexAttributePointer(2, 2, VertexAttribPointerType.Float, 8, 6);
+                Vao.LinkBufferObject(ref vbo);
+                Vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 8 * sizeof(float), 0);
+                Vao.VertexAttributePointer(1, 3, VertexAttribPointerType.Float, 8 * sizeof(float), 3 * sizeof(float));
+                Vao.VertexAttributePointer(2, 2, VertexAttribPointerType.Float, 8 * sizeof(float), 6 * sizeof(float));
 
             }
             // render Cube

@@ -12,7 +12,7 @@ namespace MyGame
         public RingPlanet(string pathTexture)
         {
             shader = new ShaderProgram("Samplers/Planets/shader.vert", "Samplers/Planets/ShaderRing.frag");
-            DiffuseMap = TextureProgram.Load(pathTexture);
+            DiffuseMap = new TextureProgram(pathTexture);
         }
         public void RenderFrame(Matrix4 model)
         {
@@ -22,7 +22,7 @@ namespace MyGame
             shader.SetUniform("view", Camera.ViewMatrix);
             shader.SetUniform("projection", Camera.ProjectionMatrix);
 
-            shader.SetUniform("DiffuseMap", DiffuseMap.Use());
+            shader.SetUniform("DiffuseMap", DiffuseMap.Use);
 
             // como queremos configurar o componente alpha da nossa textura devemos ativar o blend
             GL.Disable(EnableCap.CullFace);

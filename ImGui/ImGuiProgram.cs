@@ -1,6 +1,7 @@
 using ImGuiNET;
 
 using Vector4 = System.Numerics.Vector4;
+using Vector2 = System.Numerics.Vector2;
 
 using static ImGuiNET.ImGui;
 
@@ -12,7 +13,6 @@ namespace MyGame
         public static void RenderFrame()
         {
             ImGui.StyleColorsClassic();
-            ImGui.ShowDemoWindow();
 
             ImGui.Begin("Scene Details");
             ImGui.NewLine();
@@ -47,11 +47,6 @@ namespace MyGame
             }
 
             ImGui.NewLine();
-            ImGui.Text("Sun Waves");
-            ImGui.SliderFloat("Waves Intensity", ref Values.VelWaves, 0.0004f, 0.01f, "%.7f");
-            ImGui.SliderFloat("Outdoor Size", ref Values.outdoorSize, 0.0f, 10.0f, "%.7f");
-            
-            ImGui.NewLine();
             ImGui.RadioButton("Line Strip", ref Values.PrimitiveType, 1);
             ImGui.SameLine();
             ImGui.RadioButton("Line", ref Values.PrimitiveType, 2);
@@ -59,9 +54,18 @@ namespace MyGame
             ImGui.RadioButton("Points", ref Values.PrimitiveType, 3);
             ImGui.ColorEdit4("Lines Orbit Color", ref Values.LinesColor);
 
+            ImGui.NewLine();
+            ImGui.ColorEdit4("Color Marker", ref Values.MakerColor);
+            ImGui.SliderFloat("Scale Marker", ref Values.markerScale, 10.0f, 20.0f);
+
+            ImGui.NewLine();
+            ImGui.ColorEdit4("Color Particles", ref Values.particlesColor);
+            ImGui.ColorEdit4("Color Asteroides", ref Values.asteoridesColor);
+
+
             ImGui.Checkbox("Pause Solar System", ref Values.pauseSystem);
             if(!Values.pauseSystem)
-                ImGui.SliderFloat("Update Vel", ref Values.UpdateVel, 0.0008412f, 1.0f, "%.7f");
+                ImGui.SliderFloat("Update Vel", ref Values.UpdateVel, 0.0008412f, 5.0f, "%.7f");
 
             ImGui.NewLine();
             ImGui.Text("Planets Graphics Details");
@@ -71,10 +75,12 @@ namespace MyGame
             else if(Values.LightShininess > 256) { Values.LightShininess = 256f; }
 
             ImGui.SliderFloat("Light Specular", ref Values.LightSpecular, 0.0f, 5.0f);
-            ImGui.SliderFloat("Light Diffuse", ref Values.LightDiffuse, 0.0f, 10.0f);
+            ImGui.SliderFloat("Light Diffuse", ref Values.LightDiffuse, 0.0f, 5.0f);
             
-
             ImGui.End();
+
+
+
         }
     }
 }

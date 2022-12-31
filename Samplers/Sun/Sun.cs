@@ -13,7 +13,7 @@ namespace MyGame
         public Sun()
         {
             Shader = new ShaderProgram("Samplers/Sun/shader.vert", "Samplers/Sun/shader.frag");
-            DiffuseMap = TextureProgram.Load(solarMaps + "sol.jpg", PixelInternalFormat.SrgbAlpha);
+            DiffuseMap = new TextureProgram(solarMaps + "sol.jpg");
         }
         public void RenderFrame(Matrix4 model)
         {
@@ -25,9 +25,8 @@ namespace MyGame
 
             Shader.SetUniform("Timer", Clock.Time);
 
-            Shader.SetUniform("velWaves", Values.VelWaves);
-
-            Shader.SetUniform("DiffuseMap", DiffuseMap.Use());
+            Shader.SetUniform("DiffuseMap", DiffuseMap.Use);
+            Shader.SetUniform("LightDiffuse", Values.LightDiffuse * 10f);
 
             SphereAssimp.RenderSphere();
             

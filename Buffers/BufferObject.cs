@@ -6,7 +6,7 @@ namespace MyGame
     public class BufferObject<TDataType> : IDisposable
     where TDataType : unmanaged
     {
-        private int Handle;
+        public int Handle {get; private set; }
         private BufferTarget _bufferTarget;
 
         public unsafe BufferObject(Span<TDataType> data, BufferTarget bufferTarget)
@@ -17,7 +17,6 @@ namespace MyGame
             Bind();
             GL.BufferData(_bufferTarget, data.Length * sizeof(TDataType), data.ToArray(), BufferUsageHint.StaticDraw);
         }
-
         public void Bind()
         {
             GL.BindBuffer(_bufferTarget, Handle);

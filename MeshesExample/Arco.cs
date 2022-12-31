@@ -27,8 +27,8 @@ namespace MyGame
                 Vao = new VertexArrayObject();
                 Vbo = new BufferObject<float>(vertices.ToArray(), BufferTarget.ArrayBuffer);
 
-                Vao.BindBuffer(ref Vbo);
-                Vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 3, 0);
+                Vao.LinkBufferObject(ref Vbo);
+                Vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 3 * sizeof(float), 0);
 
             }
 

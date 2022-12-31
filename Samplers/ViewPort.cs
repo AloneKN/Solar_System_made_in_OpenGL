@@ -45,14 +45,13 @@ namespace MyGame
                                             discard;
                                     }";
             Shader = new ShaderProgram(vertex_shader, frag_shader);
-            Sprite = TextureProgram.Load(fileTexture);
+            Sprite = new TextureProgram(fileTexture);
         }
         private float rotation = 0.0f;
         public void RenderFrame(Vector2 position, float scale = 1.0f)
         {
             Shader.Use();
-            Sprite.Use(TextureUnit.Texture0);
-            Shader.SetUniform("mytexture", 0);
+            Shader.SetUniform("mytexture", Sprite.Use);
 
             var model = Matrix4.Identity;
 

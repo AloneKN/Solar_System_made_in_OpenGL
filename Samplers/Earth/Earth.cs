@@ -4,20 +4,20 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace MyGame
 {
-    public class Earth
+    public class Earth : Renderer
     {
         private ShaderProgram shader;
-        private TextureProgram DiffuseMap, NightMap, SpecularMap, NormalMap;
+        private TextureProgram DiffuseMap, SpecularMap, NormalMap;
         public Earth()
         {
             shader = new ShaderProgram("Samplers/Earth/shader.vert", "Samplers/Earth/shader.frag");
 
-            DiffuseMap = TextureProgram.Load("Resources/solarSystem/2k_earth_diffuse.jpg");
-            SpecularMap = TextureProgram.Load("Resources/solarSystem/2k_earth_specular_map.png", PixelInternalFormat.Rgba);
-            NormalMap = TextureProgram.Load("Resources/solarSystem/2k_earth_normal_map.png", PixelInternalFormat.Rgba);
+            DiffuseMap = new TextureProgram("Resources/solarSystem/2k_earth_diffuse.jpg");
+            SpecularMap = new TextureProgram("Resources/solarSystem/2k_earth_specular_map.png", 
+                PixelInternalFormat.Rgba, TextureUnit.Texture1);
+            NormalMap = new TextureProgram("Resources/solarSystem/2k_earth_normal_map.png", 
+                PixelInternalFormat.Rgba, TextureUnit.Texture2);
 
-            // representa a terra de noite
-            NightMap = TextureProgram.Load("Resources/solarSystem/2k_earth_nightmap.jpg");
         }
         public void RenderFrame(Matrix4 model)
         {
@@ -35,17 +35,13 @@ namespace MyGame
             shader.SetUniform("light.Diffuse", Values.LightDiffuse);
             
 
-            shader.SetUniform("maps.DiffuseMap", DiffuseMap.Use());
+            shader.SetUniform("maps.DiffuseMap", DiffuseMap.Use);
 
-            shader.SetUniform("maps.SpecularMap", SpecularMap.Use(TextureUnit.Texture1));
+            shader.SetUniform("maps.SpecularMap", SpecularMap.Use);
 
-            shader.SetUniform("maps.NormalMap", NormalMap.Use(TextureUnit.Texture2));
+            shader.SetUniform("maps.NormalMap", NormalMap.Use);
 
             SphereAssimp.RenderSphere();
-        }
-        public void UpdateFrame()
-        {
-
         }
         public void Dispose()
         {

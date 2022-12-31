@@ -3,14 +3,14 @@ using OpenTK.Mathematics;
 
 namespace MyGame
 {
-    public class OuterPlanets : IDisposable
+    public class OuterPlanets : Renderer
     {
         private ShaderProgram shader;
         private TextureProgram DiffuseMap;
         public OuterPlanets(string pathTexture)
         {
             shader = new ShaderProgram("Samplers/Planets/shader.vert", "Samplers/Planets/shader.frag");
-            DiffuseMap = TextureProgram.Load(pathTexture);
+            DiffuseMap = new TextureProgram(pathTexture);
 
         }
         public void RenderFrame(Matrix4 model)
@@ -29,8 +29,7 @@ namespace MyGame
             shader.SetUniform("light.Diffuse", Values.LightDiffuse);
 
 
-            DiffuseMap.Use();
-            shader.SetUniform("DiffuseMap", 0);
+            shader.SetUniform("DiffuseMap", DiffuseMap.Use);
 
             SphereAssimp.RenderSphere();
         }

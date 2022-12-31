@@ -21,10 +21,10 @@ namespace MyGame
 
                 Vao = new VertexArrayObject();
                 vbo = new BufferObject<float>(vertices, BufferTarget.ArrayBuffer);
-                Vao.BindBuffer(ref vbo);
+                Vao.LinkBufferObject(ref vbo);
 
-                Vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 5, 0);
-                Vao.VertexAttributePointer(1, 2, VertexAttribPointerType.Float, 5, 3);
+                Vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 5 * sizeof(float), 0 * sizeof(float));
+                Vao.VertexAttributePointer(1, 2, VertexAttribPointerType.Float, 5 * sizeof(float), 3 * sizeof(float));
             }
             // render Cube
             Vao.Bind();

@@ -8,9 +8,9 @@ in vec2 TexCoord;
 in vec3 Normal;
 
 uniform float Timer;
-uniform float velWaves= 0.005; // 0.0004 < - >  0.01
+uniform float LightDiffuse;
 
-
+const float velWaves = 0.005; // 0.0004 < - >  0.01
 vec4 ondulation()
 {
     const float spacingX = 50.0;
@@ -24,5 +24,8 @@ vec4 ondulation()
 void main()
 {
     vec4 resul = ondulation();
-    FragColor = resul;
+
+    vec3 diffuse = LightDiffuse  * ondulation().rgb;
+
+    FragColor = vec4(resul.rgb + diffuse, 1.0);
 }

@@ -26,7 +26,7 @@ namespace MyGame
             GL.Enable(EnableCap.TextureCubeMapSeamless);
 
             // habilita o point size, isso tem efeito apenas no shader de geometria
-            GL.Enable(EnableCap.ProgramPointSize);
+            // GL.Enable(EnableCap.ProgramPointSize);
 
             // ativando a opacidade no fragment shader
             GL.Enable(EnableCap.Blend);

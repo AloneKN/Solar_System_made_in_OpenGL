@@ -119,6 +119,7 @@ namespace MyGame
         {
             return GL.GetAttribLocation(Handle, attribName);
         }
+        // -------------------- Set All OpenTK Matematics -------------------------------------------
         public void SetUniform(string nome, bool dados)
         {
             GL.Uniform1(uniformLocations[nome], (dados ? 1 : 0));
@@ -130,10 +131,6 @@ namespace MyGame
         public void SetUniform(string nome, float dados)
         {
             GL.Uniform1(uniformLocations[nome], dados);
-        }
-        public void SetUniform(string nome, Matrix4 dados)
-        {
-            GL.UniformMatrix4(uniformLocations[nome], true, ref dados);
         }
         public void SetUniform(string nome, Vector2 dados)
         {
@@ -151,45 +148,22 @@ namespace MyGame
         {
             GL.Uniform4(uniformLocations[nome], dados);
         }
+        public void SetUniform(string nome, Matrix4 dados)
+        {
+            GL.UniformMatrix4(uniformLocations[nome], true, ref dados);
+        }
+        // -------------------- Set System numerics -------------------------------------------
+        public void SetUniform(string nome, System.Numerics.Vector2 dados)
+        {
+            GL.Uniform2(uniformLocations[nome], new Vector2(dados.X, dados.Y));
+        }
+        public void SetUniform(string nome, System.Numerics.Vector3 dados)
+        {
+            GL.Uniform3(uniformLocations[nome], new Vector3(dados.X, dados.Y, dados.Z));
+        }
         public void SetUniform(string nome, System.Numerics.Vector4 dados)
         {
             GL.Uniform4(uniformLocations[nome], new Vector4(dados.X, dados.Y, dados.Z, dados.W));
         }
     }
 }
-// public void SetUniform(string nome, bool dados)
-// {
-//     GL.Uniform1(GL.GetUniformLocation(Handle, nome), (dados ? 1 : 0));
-// }
-// public void SetUniform(string nome, int dados)
-// {
-//     GL.Uniform1(GL.GetUniformLocation(Handle, nome), dados);
-// }
-// public void SetUniform(string nome, float dados)
-// {
-//     GL.Uniform1(GL.GetUniformLocation(Handle, nome), dados);
-// }
-// public void SetUniform(string nome, Matrix4 dados)
-// {
-//     GL.UniformMatrix4(GL.GetUniformLocation(Handle, nome), true, ref dados);
-// }
-// public void SetUniform(string nome, Vector2 dados)
-// {
-//     GL.Uniform2(GL.GetUniformLocation(Handle, nome), dados);
-// }
-// public void SetUniform(string nome, Vector3 dados)
-// {
-//     GL.Uniform3(GL.GetUniformLocation(Handle, nome), dados);
-// }
-// public void SetUniform(string nome, Vector4 dados)
-// {
-//     GL.Uniform4(GL.GetUniformLocation(Handle, nome), dados);
-// }
-// public void SetUniform(string nome, Color4 dados)
-// {
-//     GL.Uniform4(GL.GetUniformLocation(Handle, nome), dados);
-// }
-// public void SetUniform(string nome, System.Numerics.Vector4 dados)
-// {
-//     GL.Uniform4(GL.GetUniformLocation(Handle, nome), new Vector4(dados.X, dados.Y, dados.Z, dados.W));
-// }

@@ -12,7 +12,7 @@ namespace MyGame
         public Atmosphere(string pathTexture)
         {
             shader = new ShaderProgram("Samplers/Planets/shader.vert", "Samplers/Planets/shaderAtmosphere.frag");
-            DiffuseMap = TextureProgram.Load(pathTexture);
+            DiffuseMap = new TextureProgram(pathTexture);
         }
         public void RenderFrame(Matrix4 model, float alpha)
         {
@@ -24,7 +24,7 @@ namespace MyGame
             shader.SetUniform("Timer", Clock.Time);
             shader.SetUniform("alpha", alpha);
 
-            shader.SetUniform("DiffuseMap", DiffuseMap.Use());
+            shader.SetUniform("DiffuseMap", DiffuseMap.Use);
 
             // como queremos configurar o componente alpha da nossa textura devemos ativar o blend
             GL.Enable(EnableCap.Blend);
